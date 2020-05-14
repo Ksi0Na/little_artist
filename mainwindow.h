@@ -28,9 +28,7 @@ private slots:
     void on_pb_outline_clicked();
     
     void on_pb_pen_clicked();
-    
     void on_pb_rect_clicked();
-    
     void on_pb_ellipse_clicked();
     
 private:

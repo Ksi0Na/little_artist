@@ -18,9 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
                        "border: 4px solid rgb(50,50,50); "
                        "background: rgb(95, 95, 95);"
                        "}");
-    ui->pb_new->setStyleSheet(styleButton);
-    ui->pb_save->setStyleSheet(styleButton);
-    ui->pb_open->setStyleSheet(styleButton);
     ui->pb_del->setStyleSheet(styleButton);
     ui->pb_move->setStyleSheet(styleButton);
     ui->pb_select->setStyleSheet(styleButton);
@@ -40,9 +37,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pb_move, &QPushButton::pressed, &_l1, &label_now::move);
     connect(ui->pb_select, &QPushButton::pressed, &_l1, &label_now::select);
     connect(ui->pb_del, &QPushButton::pressed, &_l1, &label_now::del);
-    connect(ui->pb_new, &QPushButton::pressed, &_l1, &label_now::not_signal);
-    connect(ui->pb_open, &QPushButton::pressed, &_l1, &label_now::not_signal);
-    connect(ui->pb_save, &QPushButton::pressed, &_l1, &label_now::not_signal);
+    
+    connect(_scene, &Scene::move_, &_l1, &label_now::move);
+    connect(_scene, &Scene::select_, &_l1, &label_now::select);
+    connect(_scene, &Scene::del_, &_l1, &label_now::del);
+    connect(_scene, &Scene::not_signal, &_l1, &label_now::not_signal);
+    
 //=============LABEL_NOW=============    
     
     ui->graphicsView->setScene(_scene);
@@ -50,7 +50,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
     
     connect(_scene, &Scene::mouse_moved, this, &MainWindow::position_on_scene);
-    //connect(_scene, &Scene::mouse_left_clicked, this, &MainWindow::draw_obj);
 }
 
 void MainWindow::position_on_scene(double x, double y)
@@ -63,8 +62,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-
 
 void MainWindow::on_pb_inline_clicked()
 {
@@ -104,3 +101,5 @@ void MainWindow::on_pb_ellipse_clicked()
 {
     _scene->set_shape_type(Scene::Ellipse);
 }
+
+

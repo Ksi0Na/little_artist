@@ -20,7 +20,6 @@ public slots:
     void select();
     void del();
     void not_signal();
-    
 private:
      QLabel *_l_n;
 };
